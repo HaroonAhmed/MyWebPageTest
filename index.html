@@ -53,13 +53,17 @@
 
 <script>
     setTimeout(function() {
-      // Try Android intent first
-      window.location.href = "intent://callback#Intent;scheme=outlaw;package=com.outlawgame.wallet.android;end";
+        // Always prefer HTTPS App Links
+        window.location.href = "https://otlaw-assetlinks.dev.mwancloud.com/callback ";
 
-      // Fallback for iOS and cases where intent fails
-      setTimeout(function() {
-        window.location.href = "outlaw://callback";
-      }, 200);
+        // Fallback for iOS or if HTTPS fails
+        setTimeout(function() {
+            window.location.href = "intent://callback#Intent;scheme=outlaw;package=com.outlawgame.wallet.android;end";
+        }, 200);
+
+        setTimeout(function() {
+            window.location.href = "outlaw://callback";
+        }, 400);
     }, 2000);
 </script>
 </body>
