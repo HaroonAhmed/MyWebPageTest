@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .loading-container {
+            text-align: center;
+        }
+        
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        #continueLink {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        
+        #continueLink:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container" id="loading">
+        <div class="loader"></div>
+        <p>Loading, please wait...</p>
+    </div>
+    
+    <div class="hidden" id="content">
+        <a href="https://app.ex-sports.io?camelpack=1" id="continueLink">Continue to Google.com</a>
+    </div>
+
+    <script>
+        // Wait for 5 seconds (5000 milliseconds)
+        setTimeout(function() {
+            // Hide loading screen
+            document.getElementById('loading').classList.add('hidden');
+            
+            // Show the link
+            document.getElementById('content').classList.remove('hidden');
+            
+            // Automatically click the link after a short delay (100ms)
+            setTimeout(function() {
+                document.getElementById('continueLink').click();
+            }, 100);
+            
+        }, 2000);
+    </script>
+</body>
+</html>
