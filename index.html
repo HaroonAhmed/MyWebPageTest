@@ -34,49 +34,40 @@
             100% { transform: rotate(360deg); }
         }
         
-        .hidden {
+        #fallback {
             display: none;
-        }
-        
-        #continueLink {
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        
-        #continueLink:hover {
-            background-color: #2980b9;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="loading-container" id="loading">
-        <div class="loader"></div>
-        <p>Loading, please wait...</p>
+<div class="loading-container">
+    <div class="loader"></div>
+    <p>Loading, please wait...</p>
+    <div id="fallback">
+        <p>The app didn't open automatically. <a href="outlaw://callback}" id="manualLink">Click here to open app</a></p>
     </div>
-    
-    <div class="hidden" id="content">
-        <a href="https://app.ex-sports.io?camelpack=1" id="continueLink">Continue to Google.com</a>
-    </div>
+</div>
 
-    <script>
-        // Wait for 5 seconds (5000 milliseconds)
+<script>
+    setTimeout(function() {
+        // First try with iframe method (works best on iOS)
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = 'outlaw://callback}';
+        document.body.appendChild(iframe);
+
+        // Then try with window.location (works best on Android)
         setTimeout(function() {
-            // Hide loading screen
-            document.getElementById('loading').classList.add('hidden');
-            
-            // Show the link
-            document.getElementById('content').classList.remove('hidden');
-            
-            // Automatically click the link after a short delay (100ms)
-            setTimeout(function() {
-                document.getElementById('continueLink').click();
-            }, 100);
-            
-        }, 2000);
-    </script>
+            window.location.href = 'outlaw://callback}';
+        }, 100);
+
+        // Show fallback link if app doesn't open
+        setTimeout(function() {
+            document.getElementById('fallback').style.display = 'block';
+        }, 1000);
+
+    }, 5000);
+</script>
 </body>
 </html>
