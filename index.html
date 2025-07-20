@@ -52,11 +52,11 @@
 <script>
     setTimeout(function() {
       // Try Android intent first
-      window.location.href = "intent://otlaw-assetlinks.dev.mwancloud.com?camelpack=1#Intent;scheme=https;package=com.outlawgame.wallet.android;end";
+      window.location.href = "intent://callback#Intent;scheme=outlaw;package=com.outlawgame.wallet.android;end";
 
       // Fallback for iOS and cases where intent fails
       setTimeout(function() {
-        window.location.href = "https://https://otlaw-assetlinks.dev.mwancloud.com?camelpack=1";
+        window.location.href = "outlaw://callback";
       }, 200);
     }, 2000);
 </script>
