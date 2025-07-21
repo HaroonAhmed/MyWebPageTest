@@ -46,24 +46,24 @@
     <div class="loader"></div>
     <p>Loading, please wait...</p>
     <div id="fallback">
-        <p>The app didn't open automatically. <a href="outlaw://callback}" id="manualLink">Click here to open app</a></p>
+        <p>The app didn't open automatically. <a href="outlaw://callback" id="manualLink">Click here to open app</a></p>
     </div>
 </div>
 
-<script>
-    setTimeout(function() {
-        // Always prefer HTTPS App Links
-        window.location.href = "https://otlaw-assetlinks.dev.mwancloud.com/callback";
+<!--<script>-->
+<!--    setTimeout(function() {-->
+<!--        // Always prefer HTTPS App Links-->
+<!--        window.location.href = "https://otlaw-assetlinks.dev.mwancloud.com/callback";-->
 
-        // Fallback for iOS or if HTTPS fails
-        setTimeout(function() {
-            window.location.href = "intent://callback#Intent;scheme=outlaw;package=com.outlawgame.wallet.android;end";
-        }, 200);
+<!--        // Fallback for iOS or if HTTPS fails-->
+<!--        setTimeout(function() {-->
+<!--            window.location.href = "intent://callback#Intent;scheme=outlaw;package=com.outlawgame.wallet.android;end";-->
+<!--        }, 200);-->
 
-        setTimeout(function() {
-            window.location.href = "outlaw://callback";
-        }, 400);
-    }, 2000);
-</script>
+<!--        setTimeout(function() {-->
+<!--            window.location.href = "outlaw://callback";-->
+<!--        }, 400);-->
+<!--    }, 2000);-->
+<!--</script>-->
 </body>
 </html>
