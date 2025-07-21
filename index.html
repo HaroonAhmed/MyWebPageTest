@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading Page</title>
-    <meta name="intent" content="android-app://com.outlawgame.wallet.android/https/otlaw-assetlinks.dev.mwancloud.com/callback" />    <style>
+<h2>Click the button below to launch the application:</h2>
+<a href="outlaw://callback"><button>Open My App</button></a>
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Loading Page</title>-->
+<!--    <meta name="intent" content="android-app://com.outlawgame.wallet.android/https/otlaw-assetlinks.dev.mwancloud.com/callback" />    <style>-->
 
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        
-        .loading-container {
-            text-align: center;
-        }
-        
-        .loader {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 2s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        #fallback {
-            display: none;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-<div class="loading-container">
-    <div class="loader"></div>
-    <p>Loading, please wait...</p>
-    <div id="fallback">
-        <p>The app didn't open automatically. <a href="outlaw://callback" id="manualLink">Click here to open app</a></p>
-    </div>
-</div>
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            height: 100vh;-->
+<!--            margin: 0;-->
+<!--            background-color: #f0f0f0;-->
+<!--        }-->
+<!--        -->
+<!--        .loading-container {-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        -->
+<!--        .loader {-->
+<!--            border: 8px solid #f3f3f3;-->
+<!--            border-top: 8px solid #3498db;-->
+<!--            border-radius: 50%;-->
+<!--            width: 60px;-->
+<!--            height: 60px;-->
+<!--            animation: spin 2s linear infinite;-->
+<!--            margin: 0 auto 20px;-->
+<!--        }-->
+<!--        -->
+<!--        @keyframes spin {-->
+<!--            0% { transform: rotate(0deg); }-->
+<!--            100% { transform: rotate(360deg); }-->
+<!--        }-->
+<!--        -->
+<!--        #fallback {-->
+<!--            display: none;-->
+<!--            margin-top: 20px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="loading-container">-->
+<!--    <div class="loader"></div>-->
+<!--    <p>Loading, please wait...</p>-->
+<!--    <div id="fallback">-->
+<!--        <p>The app didn't open automatically. <a href="outlaw://callback" id="manualLink">Click here to open app</a></p>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!--<script>-->
 <!--    setTimeout(function() {-->
@@ -65,5 +67,5 @@
 <!--        }, 400);-->
 <!--    }, 2000);-->
 <!--</script>-->
-</body>
+<!--</body>-->
 </html>
