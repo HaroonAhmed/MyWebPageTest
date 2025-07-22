@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redirecting...</title>
+    <title>Opening App...</title>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://app.ex-sports.io?camelpack=1">
-    <script>
-        // Fallback redirect using JavaScript
-        window.onload = function() {
-          window.location.href = "https://app.ex-sports.io?camelpack=1";
-        };
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript">
+        const appUrl = "https://app.ex-sports.io?camelpack=1"; // Your actual App Link
+
+        // Try to open the app directly
+        window.location.href = appUrl;
+
+        // Fallback: If the app doesn't open after a short delay, redirect to a fallback (e.g., Play Store or a web version)
+        setTimeout(function() {
+            // Check if the current URL is still the appUrl, meaning the app didn't open
+            if (document.visibilityState === 'visible' && document.location.href === appUrl) {
+                // Option 1: Redirect to Play Store
+                window.location.href = "https://play.google.com/store/apps/details?id=io.exs.android"; // Replace with your app's Play Store URL
+                // Option 2: Show a message with a button to open the app or Play Store
+                // document.getElementById('message').innerText = "The app didn't open automatically. Click here:";
+                // document.getElementById('openAppButton').style.display = 'block';
+            }
+        }, 2500); // Wait 2.5 seconds (adjust as needed)
     </script>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        #openAppButton { display: none; margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
 </head>
 <body>
-<p>Redirecting you to the app...</p>
+<p id="message">Attempting to open the Ex-Sports app...</p>
+<button id="openAppButton" onclick="window.location.href='https://app.ex-sports.io?camelpack=1';">Open App</button>
+<p>If the app does not open, please ensure it is installed.</p>
 </body>
 </html>
