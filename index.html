@@ -1,107 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Opening Ex-Sports App...</title>
+    <title>Dummy OAuth Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:,"> <style>
-    body {
-        font-family: sans-serif;
-        text-align: center;
-        padding: 50px;
-        background-color: #f0f0f0;
-        color: #333;
-    }
-    .container {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        max-width: 400px;
-        margin: 50px auto;
-    }
-    h1 {
-        color: #2c3e50;
-    }
-    p {
-        margin-bottom: 20px;
-    }
-    .button {
-        display: inline-block;
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-        margin-top: 10px;
-    }
-    .button:hover {
-        background-color: #0056b3;
-    }
-    .small-text {
-        font-size: 0.8em;
-        color: #666;
-        margin-top: 30px;
-    }
-</style>
+    <link rel="icon" href="data:,">
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0; color: #333; }
+        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 400px; margin: 50px auto; }
+        h1 { color: #2c3e50; }
+        p { margin-bottom: 20px; }
+        .button {
+            display: inline-block;
+            background-color: #28a745; /* Green for "Allow" */
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        .button:hover { background-color: #218838; }
+        .cancel-button {
+            display: inline-block;
+            background-color: #dc3545; /* Red for "Deny" */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .cancel-button:hover { background-color: #c82333; }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h1>Welcome to Ex-Sports!</h1>
-    <p id="status-message">Attempting to open the Ex-Sports app automatically...</p>
-    <a id="open-app-button" class="button" href="#" style="display: none;">Open App</a>
-    <a id="play-store-button" class="button" href="#" style="display: none;">Get from Play Store</a>
-    <p class="small-text">If the app does not open after a few seconds, please ensure it is installed on your device.</p>
+    <h1>Dummy OAuth Provider</h1>
+    <p>This is a simulated login/consent page.</p>
+    <p>Your "Ex-Sports App" is requesting access to your basic profile information.</p>
+    <a href="/oauth-callback?code=DUMMY_AUTH_CODE_123&state=DUMMY_STATE_XYZ" class="button">Allow Access</a>
+    <br>
+    <a href="/oauth-callback?error=access_denied&error_description=User%20denied%20access" class="cancel-button">Deny Access</a>
 </div>
-
-<script type="text/javascript">
-    // Your App Link that your Android app is configured to handle
-    const appLinkUrl = "https://my-web-page-test.vercel.app/callback?data=test"; // Your specific deep link
-
-    // Your app's Play Store URL
-    const playStoreUrl = "https://play.google.com/store/apps/details?id=com.mwan.deeplink"; // REPLACE with your app's actual Play Store ID if published
-
-    const statusMessage = document.getElementById('status-message');
-    const openAppButton = document.getElementById('open-app-button');
-    const playStoreButton = document.getElementById('play-store-button');
-
-    let appOpened = false; // Flag to track if app likely opened
-
-    // Function to attempt opening the app
-    function tryOpenApp() {
-        window.location.href = appLinkUrl;
-    }
-
-    // Attempt to open the app immediately
-    tryOpenApp();
-
-    // Set a timeout to check if the app opened
-    const timeoutId = setTimeout(function() {
-        // Check if the page is still visible (app didn't take over)
-        // and if the URL still matches the expected domain (to avoid false positives if user navigated away)
-        if (document.visibilityState === 'visible' && window.location.href.includes("my-web-page-test.vercel.app")) {
-            statusMessage.innerText = "The app didn't open automatically. Please use the button below or download it from the Play Store.";
-
-            openAppButton.innerText = "Open App";
-            openAppButton.href = appLinkUrl;
-            openAppButton.style.display = 'inline-block';
-
-            playStoreButton.innerText = "Get from Play Store";
-            playStoreButton.href = playStoreUrl;
-            playStoreButton.style.display = 'inline-block';
-        }
-    }, 2500); // Wait 2.5 seconds (adjust as needed)
-
-    // Optional: Listen for visibility changes to detect app launch
-    document.addEventListener('visibilitychange', function() {
-        if (document.visibilityState === 'hidden') {
-            // If the page becomes hidden, it likely means the app launched
-            appOpened = true;
-            clearTimeout(timeoutId); // Clear the timeout as the app has likely opened
-        }
-    });
-</script>
 </body>
 </html>
