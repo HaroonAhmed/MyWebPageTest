@@ -28,17 +28,16 @@
 <body>
 <div class="container">
     <h1>Returning to Ex-Sports App</h1>
-    <p id="status-message">Please wait, attempting to open the app automatically...</p>
-    <a id="open-app-button" class="button" href="#" style="display: none;">Open App</a>
+    <p id="status-message">Please click 'Open App' to continue:</p> <a id="open-app-button" class="button" href="#">Open App</a>
     <a id="play-store-button" class="button" href="https://play.google.com/store/apps/details?id=com.mwan.deeplink" style="display: none;">Get from Play Store</a>
-    <p class="small-text">If the app doesn't open, ensure it is installed or click 'Open App'.</p>
+    <p class="small-text">Ensure the Ex-Sports app is installed.</p>
 </div>
 
 <script type="text/javascript">
     const currentUrl = new URL(window.location.href);
     const authCode = currentUrl.searchParams.get('code');
     const state = currentUrl.searchParams.get('state');
-    const error = currentUrl.searchParams.get('error'); // Get error if any
+    const error = currentUrl.searchParams.get('error');
     const errorDescription = currentUrl.searchParams.get('error_description');
 
     let appDeepLink = `com.mwan.deeplink://oauth/callback`;
@@ -51,13 +50,9 @@
         if (errorDescription) {
             params.push(`error_description=${encodeURIComponent(errorDescription)}`);
         }
-    } else {
-         // Fallback if no code or error, maybe just open the app to its home or error state
-         // This might happen if someone navigates directly to oauth-callback.html without parameters.
-         appDeepLink = `com.mwan.deeplink://`;
     }
 
-    if (state) { // Always pass state if present
+    if (state) {
         params.push(`state=${encodeURIComponent(state)}`);
     }
 
@@ -71,18 +66,20 @@
 
     openAppButton.href = appDeepLink; // Set the button's href
 
-    // Attempt automatic redirect to the app deep link
-    window.location.href = appDeepLink;
+    // Make the button visible immediately
+    openAppButton.style.display = 'inline-block';
 
-    // Fallback after a short delay if the app doesn't open automatically
+    // Optionally, add a very short, non-critical auto-redirect attempt, but rely on the button.
+    // Or remove it entirely for this dummy test. Let's remove it for clarity in this test.
+    // window.location.href = appDeepLink; // REMOVE OR COMMENT THIS LINE FOR RELIABLE CCT REDIRECTS
+
+    // The timeout should now only be for showing the Play Store button, not attempting auto-redirect
     setTimeout(function() {
-        if (document.visibilityState === 'visible') { // If the web page is still visible
-            statusMessage.innerText = "The app didn't open. Click 'Open App' or get it from Play Store.";
-            openAppButton.style.display = 'inline-block';
+        if (document.visibilityState === 'visible') {
+            statusMessage.innerText = "The app didn't open. Please click 'Open App' or 'Get from Play Store'.";
             playStoreButton.style.display = 'inline-block';
         }
-    }, 1500); // 1.5 seconds
-
+    }, 3000); // Give user 3 seconds to see the "Open App" button first
 </script>
 </body>
 </html>
