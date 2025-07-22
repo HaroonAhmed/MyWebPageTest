@@ -1,35 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Opening App...</title>
+    <title>Opening Ex-Sports App...</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript">
-        const appUrl = "https://app.ex-sports.io?camelpack=1"; // Your actual App Link
-
-        // Try to open the app directly
-        window.location.href = appUrl;
-
-        // Fallback: If the app doesn't open after a short delay, redirect to a fallback (e.g., Play Store or a web version)
-        setTimeout(function() {
-            // Check if the current URL is still the appUrl, meaning the app didn't open
-            if (document.visibilityState === 'visible' && document.location.href === appUrl) {
-                // Option 1: Redirect to Play Store
-                window.location.href = "https://play.google.com/store/apps/details?id=io.exs.android"; // Replace with your app's Play Store URL
-                // Option 2: Show a message with a button to open the app or Play Store
-                // document.getElementById('message').innerText = "The app didn't open automatically. Click here:";
-                // document.getElementById('openAppButton').style.display = 'block';
-            }
-        }, 2500); // Wait 2.5 seconds (adjust as needed)
-    </script>
     <style>
-        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
-        #openAppButton { display: none; margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .small-text {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
-<p id="message">Attempting to open the Ex-Sports app...</p>
-<button id="openAppButton" onclick="window.location.href='https://app.ex-sports.io?camelpack=1';">Open App</button>
-<p>If the app does not open, please ensure it is installed.</p>
+<div class="container">
+    <h1>Welcome to Ex-Sports!</h1>
+    <p id="status-message">Attempting to open the Ex-Sports app automatically...</p>
+    <a id="fallback-button" class="button" href="#" style="display: none;">Open App</a>
+    <p class="small-text">If the app does not open after a few seconds, please ensure it is installed on your device.</p>
+</div>
+
+<script type="text/javascript">
+    const appUrl = "https://app.ex-sports.io?camelpack=1"; // Your actual App Link
+    const playStoreUrl = "https://play.google.com/store/apps/details?id=io.exs.android"; // Replace with your app's Play Store URL
+
+    const statusMessage = document.getElementById('status-message');
+    const fallbackButton = document.getElementById('fallback-button');
+
+    // Attempt to open the app immediately
+    window.location.href = appUrl;
+
+    // Set a timeout to check if the app opened
+    setTimeout(function() {
+        // Check if the current document is still visible (i.e., app didn't take over)
+        // and if the URL is still the appUrl (to avoid showing fallback for other navigations)
+        if (document.visibilityState === 'visible' && window.location.href.startsWith(appUrl.split('?')[0])) {
+            statusMessage.innerText = "The app didn't open automatically. Please use the button below or download it from the Play Store.";
+            fallbackButton.innerText = "Open App";
+            fallbackButton.href = appUrl; // Direct app link for the button
+            fallbackButton.style.display = 'inline-block';
+
+            // You could also add another button for the Play Store
+            // const playStoreButton = document.createElement('a');
+            // playStoreButton.className = 'button';
+            // playStoreButton.innerText = 'Get from Play Store';
+            // playStoreButton.href = playStoreUrl;
+            // document.querySelector('.container').appendChild(playStoreButton);
+        }
+    }, 2500); // 2.5 seconds timeout
+
+    // Optional: Listen for visibility changes to detect app launch
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+            // If the page becomes hidden, it likely means the app launched
+            // No need to show fallback
+            clearTimeout(this.timeoutId); // Clear the timeout if it was set
+        }
+    });
+</script>
 </body>
 </html>
