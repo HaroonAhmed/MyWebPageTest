@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Returning to App...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0; color: #333; }
+        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 400px; margin: 50px auto; }
+        h1 { color: #2c3e50; }
+        p { margin-bottom: 20px; }
+        .button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .button:hover { background-color: #0056b3; }
+        .small-text { font-size: 0.8em; color: #666; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Returning to Ex-Sports App</h1>
+        <p id="status-message">If your app doesn't open, please click the button below:</p>
+        <a id="open-app-button" class="button" href="#">Open App</a>
+        <a id="play-store-button" class="button" href="https://play.google.com/store/apps/details?id=com.mwan.deeplink" style="display: none;">Get from Play Store</a>
+        <p class="small-text">Ensure the Ex-Sports app is installed for automatic opening.</p>
+    </div>
+
+    <script type="text/javascript">
+        // This page receives the OAuth callback parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const authCode = urlParams.get('code');
+        const state = urlParams.get('state'); // Crucial for CSRF protection with PKCE
+
+        // Construct your deep link to go back to the app.
+        // Using a custom scheme for clarity here is highly recommended for the *final* app launch from the web page.
+        // Make sure your AndroidManifest has an intent-filter for this scheme.
+        const appDeepLink = `com.mwan.deeplink://oauth/callback?code=${authCode}&state=${state}`;
+
+        // Fallback for Play Store if app not installed (replace with your actual Play Store URL)
+        const playStoreUrl = "https://play.google.com/store/apps/details?id=com.mwan.deeplink"; 
+
+        const openAppButton = document.getElementById('open-app-button');
+        const playStoreButton = document.getElementById('play-store-button');
+        const statusMessage = document.getElementById('status-message');
+
+        // Set the button's href immediately
+        openAppButton.href = appDeepLink;
+
+        // Try to open the app automatically first (sometimes works, but less reliable in CCTs for redirects)
+        window.location.href = appDeepLink;
+
+        // Fallback if app doesn't open after a delay
+        setTimeout(function() {
+            if (document.visibilityState === 'visible') { // If the page is still visible
+                statusMessage.innerText = "The app didn't open automatically. Please click 'Open App' or 'Get from Play Store'.";
+                openAppButton.style.display = 'inline-block';
+                playStoreButton.style.display = 'inline-block';
+            }
+        }, 1500); // Shorter timeout for user to see the button quicker
+    </script>
+</body>
+</html>
