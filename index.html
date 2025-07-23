@@ -1,51 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dummy OAuth Login</title>
+    <title>Open App Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:,">
-    <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0; color: #333; }
-        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 400px; margin: 50px auto; }
-        h1 { color: #2c3e50; }
-        p { margin-bottom: 20px; }
-        .button {
-            display: inline-block;
-            background-color: #28a745; /* Green for "Allow" */
-            color: #fff;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
-            font-size: 1.1em;
-        }
-        .button:hover { background-color: #218838; }
-        .cancel-button {
-            display: inline-block;
-            background-color: #dc3545; /* Red for "Deny" */
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-        .cancel-button:hover { background-color: #c82333; }
-    </style>
+    <link rel="icon" href="data:,"> <style>
+    body {
+        font-family: sans-serif;
+        text-align: center;
+        padding: 50px;
+        background-color: #f0f0f0;
+        color: #333;
+    }
+    .container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        max-width: 400px;
+        margin: 50px auto;
+    }
+    h1 {
+        color: #2c3e50;
+    }
+    p {
+        margin-bottom: 20px;
+    }
+    .button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 15px 30px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.2em;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+    .button:hover {
+        background-color: #0056b3;
+    }
+    .small-text {
+        font-size: 0.8em;
+        color: #666;
+        margin-top: 30px;
+    }
+</style>
 </head>
 <body>
 <div class="container">
-    <h1>Dummy OAuth Provider</h1>
-    <p>This is a simulated login/consent page.</p>
-    <p>Your "Ex-Sports App" is requesting access to your basic profile information.</p>
-    <a href="/oauth-callback?code=DUMMY_AUTH_CODE_123&state=DUMMY_STATE_XYZ" class="button">Allow Access</a>
-    <br>
-    <a href="/oauth-callback?error=access_denied&error_description=User%20denied%20access" class="cancel-button">Deny Access</a>
+    <h1>Welcome!</h1>
+    <p>This page needs to open the Ex-Sports app to continue.</p>
+
+    <a id="openAppButton" class="button" href="com.mwan.deeplink://data?param1=value1&param2=value2">
+        Open Ex-Sports App
+    </a>
+
+    <p class="small-text">If the app does not open, please ensure it is installed on your device.</p>
+    <p class="small-text">
+        <a href="https://play.google.com/store/apps/details?id=com.mwan.deeplink" target="_blank">
+            Get the app from Play Store
+        </a>
+    </p>
 </div>
+
+<script type="text/javascript">
+    // OPTIONAL: A small piece of JS for basic fallback if the deep link doesn't open immediately
+    // This is not for auto-redirect, but for better UX if the initial deep link fails.
+    const appButton = document.getElementById('openAppButton');
+    const playStoreLink = document.querySelector('.small-text a[target="_blank"]');
+
+    let appOpened = false;
+
+    // Listen for user clicking the deep link button
+    appButton.addEventListener('click', function() {
+        // Give the system a moment to try opening the app
+        setTimeout(function() {
+            // If the page is still visible, the app likely didn't open.
+            if (document.visibilityState === 'visible') {
+                // You could show a message here, e.g., "App failed to open..."
+                // And make the Play Store link more prominent.
+                if (playStoreLink) {
+                    playStoreLink.style.fontWeight = 'bold';
+                    playStoreLink.style.color = '#dc3545'; // Red color to highlight
+                }
+            }
+        }, 1000); // Wait 1 second
+    });
+
+    // Detect if the app launched (page becomes hidden)
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+            appOpened = true;
+        }
+    });
+</script>
 </body>
 </html>
